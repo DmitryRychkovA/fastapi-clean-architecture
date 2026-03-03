@@ -1,0 +1,29 @@
+services:
+  test-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: test_medical_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  test-app:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@test-db:5432/test_medical_db
+      - APP_ENV=testing
+      - DEBUG=false
+    depends_on:
+      test-db:
+        condition: service_healthy
+    command: >
+      bash -c "
+        alembic upgrade head &&
+        pytest --cov=src --cov-report=term-missing -v
+      "

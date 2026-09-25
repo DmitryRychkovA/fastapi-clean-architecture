@@ -54,7 +54,7 @@ Layers follow the **Dependency Inversion Principle** — inner layers (domain, a
 ### With Docker (full stack)
 
 ```bash
-git clone https://github.com/yourusername/fastapi-clean-architecture.git
+git clone https://github.com/DmitryRychkovA/fastapi-clean-architecture.git
 cd fastapi-clean-architecture
 docker compose up --build
 ```
@@ -183,8 +183,7 @@ make docker-test
 ├── docker-compose.yml                    # Full stack (app+worker+db+rmq+redis)
 ├── docker-compose.test.yml              # Test stack (PostgreSQL + pytest)
 ├── Makefile
-├── pyproject.toml
-└── CHANGES.md                            # Detailed changelog
+└── pyproject.toml
 ```
 
 ---
